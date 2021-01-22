@@ -1,0 +1,4 @@
+com/meli/api/challenge/controller/ItemControllerTest.java
+ com.meli.api.challenge.controller.ItemControllerTest
+com/meli/api/challenge/ChallengeApplicationTests.java
+ com.meli.api.challenge.ChallengeApplicationTests
