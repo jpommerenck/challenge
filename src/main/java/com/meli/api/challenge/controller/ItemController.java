@@ -27,12 +27,6 @@ public class ItemController {
 		return service.getItem(itemId);
 	}
 
-	@GetMapping("/{itemId}/children")
-	public Item getChildren(@PathVariable("itemId") String itemId) {
-		validateItemId(itemId);
-		return service.getChildren(itemId);
-	}
-
 	private void validateItemId(String itemId) {
 		if (StringUtils.isBlank(itemId)) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No item id provided.");

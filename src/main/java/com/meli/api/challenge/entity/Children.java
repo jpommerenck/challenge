@@ -1,35 +1,17 @@
 package com.meli.api.challenge.entity;
 
-import java.io.Serializable;
-import java.util.Date;
+import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+public class Children {
 
-@JsonPropertyOrder({ "item_id", "stop_time" })
-public class Children implements Serializable {
+	private List<Child> children;
 
-	private static final long serialVersionUID = 1L;
-
-	private String itemId;
-	private Date stopTime;
-
-	@JsonProperty(value = "item_id")
-	public String getItemId() {
-		return itemId;
+	public List<Child> getChildren() {
+		return children;
 	}
 
-	public void setItemId(String itemId) {
-		this.itemId = itemId;
-	}
-
-	@JsonProperty(value = "stop_time")
-	public Date getStopTime() {
-		return stopTime;
-	}
-
-	public void setStopTime(Date stopTime) {
-		this.stopTime = stopTime;
+	public void setChildren(List<Child> children) {
+		this.children = children;
 	}
 
 }

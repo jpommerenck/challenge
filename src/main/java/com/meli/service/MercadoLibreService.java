@@ -14,33 +14,37 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.meli.api.challenge.entity.Children;
 import com.meli.api.challenge.entity.Item;
 
 @Service
 public class MercadoLibreService {
 
 	static Logger log = LoggerFactory.getLogger(MercadoLibreService.class.getName());
-	
+
 	private static final String ACCEPT_HEADER = "Accept";
 	private static final String APPLICATION_JSON = "application/json";
 	private static final String GET = "GET";
-	private static final String ITEM_PATH = "/test/%s";
-	private static final String CHILDREN_PATH = "/test/%s/children";
+	private static final String ITEM_PATH = "/items/%s";
+	private static final String CHILDREN_PATH = "/items/%s/children";
 
 	@Value("${mercadolibre.api.url}")
 	private String apiUrl;
 
 	public Item getItem(String itemId) {
 		log.info(String.format("Get Item %s", itemId));
-		return doGet(String.format(ITEM_PATH, itemId));
+		Item item = doGet(String.format(ITEM_PATH, itemId), Item.class);
+		Children children = getChildren(itemId);
+		item.addChildrens(children == null ? null : getChildren(itemId).getChildren());
+		return item;
 	}
 
-	public Item getChildren(String itemId) {
+	private Children getChildren(String itemId) {
 		log.info(String.format("Get Children %s", itemId));
-		return doGet(String.format(CHILDREN_PATH, itemId));
+		return doGet(String.format(CHILDREN_PATH, itemId), Children.class);
 	}
 
-	private Item doGet(String path) {
+	private <T> T doGet(String path, Class<T> valueType) {
 		try {
 			URL url = new URL(apiUrl + path);
 
@@ -51,7 +55,9 @@ public class MercadoLibreService {
 			int responseCode = con.getResponseCode();
 			if (responseCode == HttpURLConnection.HTTP_OK) {
 				log.info(String.format("Success GET %s", path));
-				return new ObjectMapper().readValue(getResponse(con.getInputStream()), Item.class);
+				return new ObjectMapper().readValue(getResponse(con.getInputStream()), valueType);
+			} else if (responseCode == HttpURLConnection.HTTP_NO_CONTENT) {
+				return null;
 			} else {
 				throw new ResponseStatusException(responseCode, getResponse(con.getErrorStream()), null);
 			}
