@@ -4,7 +4,11 @@ com/meli/api/challenge/entity/Children.java
  com.meli.api.challenge.entity.Children
 com/meli/api/challenge/controller/ItemController.java
  com.meli.api.challenge.controller.ItemController
+com/meli/api/challenge/entity/Child.java
+ com.meli.api.challenge.entity.Child
 com/meli/api/challenge/entity/Item.java
  com.meli.api.challenge.entity.Item
+com/meli/api/challenge/controller/ItemController2.java
+ com.meli.api.challenge.controller.ItemController2
 com/meli/api/challenge/ChallengeApplication.java
  com.meli.api.challenge.ChallengeApplication
